@@ -1,0 +1,7 @@
+venv
+*.pyc
+*twitter_keys.py
+search.json
+statuses.json
+logs
+*.csv
