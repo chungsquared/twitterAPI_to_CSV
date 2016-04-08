@@ -4,13 +4,14 @@ import os, oauth2, json, csv,time
 
 def authenticate():
 	user = UserKeys().user1()
+	# Enter your Oauth 2 consumer keys and tokens below
 	consumer = oauth2.Consumer(key=user["CONSUMER_KEY"], secret=user["CONSUMER_SECRET"])
 	access_token = oauth2.Token(key=user["ACCESS_KEY"], secret=user["ACCESS_SECRET"])
 	client = oauth2.Client(consumer, access_token)
 
 	return client
 
-def get_data(search,times):
+def get_data(search):
 
 	response,data = client.request(search,"GET")
 	data =  json.loads(data)
@@ -36,7 +37,7 @@ def get_data(search,times):
 
 	return tweets
 
-
+# Saves data to a .csv file in the log directory
 def sava_data(data,search_name):
 
 	path = os.path.dirname(os.path.abspath('script.py'))
@@ -56,6 +57,8 @@ def sava_data(data,search_name):
 		temp = []
 
 		for key,val in item.iteritems():
+			# Check for unicode data and convert to str. I had issues trying to save unicode
+			# to a .csv
 			if type(val) == unicode:
 				val = val.encode('utf-8')
 			temp.append(val)
@@ -65,8 +68,11 @@ def sava_data(data,search_name):
 	new_log.close()
 
 if __name__ == "__main__":
-
+	# Create Oauth obj
 	client = authenticate()
-	data = get_data("https://api.twitter.com/1.1/search/tweets.json?q=%40trump&count=100",1)
+	# The packaging of data only works for this call. If you want to use other api calls, you must
+	# go trough the JSON data and change the code accordingly
+	data = get_data("https://api.twitter.com/1.1/search/tweets.json?q=%40trump&count=100")
+
 	sava_data(data,"Donald_Trump")
 	
