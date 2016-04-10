@@ -15,6 +15,5 @@ Information taken is:
   10. Tweet's Created_at
   11. Tweet's Timezone
 
-Once information is received, it is packaged and saved as a .csv file. I plan on taking the data in testing out 
-on Splunk Lite's Platform for analysis.
+Once information is received, it is packaged and saved as a .csv file. 
 
